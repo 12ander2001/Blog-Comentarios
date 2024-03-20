@@ -1,0 +1,99 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blog de Comentarios</title>
+    <link rel="stylesheet" href="{% static 'main.css' %}" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+      crossorigin="anonymous"
+    />
+  </head>
+<section class="vh-100" style="background-color: #eee;">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col col-lg-9 col-xl-7">
+        <div class="card rounded-3">
+          <div class="card-body p-4">
+
+            <h4 class="text-center my-3 pb-3">Blog de Tareas</h4>
+            <div>
+              <form method="POST" class="row row-cols-lg-auto g-3 justify-content-center align-items-center mb-4 pb-2">
+                  {% csrf_token %}
+                  <div style="display: flex; justify-content: space-between; align-items: center;">
+                      <div>
+                          {{ form.todo_name.label_tag }}
+                          {{ form.todo_name }}
+                      </div>
+                      <div>
+                          <button type="submit" class="btn btn-primary" style="margin-left: 10px;">Añadir tarea</button>
+                      </div>
+                  </div>
+                  <div style="display: flex; justify-content: center; align-items: center;">
+                      <div style="margin-right: 10px;">
+                          {{ form.description.label_tag }}
+                      </div>
+                      <div>
+                          {{ form.description }}
+                      </div>
+                  </div>
+              </form>
+          </div>
+          
+          
+          
+
+          <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+            <a href="{% url 'logout' %}" style="background: firebrick; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Cerrar sesión</a>
+            <a href="{% url 'send-email' %}" style="background: #007bff; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Enviar</a>
+        </div>
+
+    
+    <div style="overflow-x: auto; max-width: 100%;">
+      <table style="width:100%; border-collapse: collapse;">
+          <thead>
+              <tr>
+                  <th style="border: 1px solid #ddd; padding: 8px; text-align: left; background-color: #f2f2f2; min-width: 150px;">Título</th>
+                  <th style="border: 1px solid #ddd; padding: 8px; text-align: left; background-color: #f2f2f2; min-width: 100px;">Estado</th>
+                  <th style="border: 1px solid #ddd; padding: 8px; text-align: left; background-color: #f2f2f2;">Descripción</th>
+                  <th style="border: 1px solid #ddd; padding: 8px; text-align: left; background-color: #f2f2f2;">Acciones</th>
+              </tr>
+          </thead>
+          <tbody>
+              {% for todo_item in todos %}
+              <tr>
+                  <td style="border: 1px solid #ddd; padding: 8px; min-width: 150px;">{{ todo_item.todo_name }}</td>
+                  <td style="border: 1px solid #ddd; padding: 8px; min-width: 100px;">
+                    {% if todo_item.status %}
+                        Completado
+                    {% else %}
+                        En progreso
+                    {% endif %}
+                </td>
+                  <td style="border: 1px solid #ddd; padding: 8px; overflow: auto; max-width: 300px;">
+                    <details>
+                        <summary>Ver descripción</summary>
+                        {{ todo_item.description }}
+                    </details>
+                </td>
+                  <td style="border: 1px solid #ddd; padding: 8px; display: flex; justify-content: space-between;">
+                      <a href="{% url 'delete' todo_item.todo_name %}"><button type="submit" class="btn btn-danger">Eliminar</button></a>
+                      <a href="{% url 'update' todo_item.todo_name %}"><button type="submit" class="btn btn-success ms-1">Finalizado</button></a>
+                  </td>
+              </tr>
+              {% endfor %}
+          </tbody>
+      </table>
+  </div>  
+  
+  
+  
+  
+</body>
+</html>
