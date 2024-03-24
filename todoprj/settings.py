@@ -30,9 +30,9 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
-# Application definition
 
 INSTALLED_APPS = [
+    'widget_tweaks',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -132,3 +132,4 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'andermoralesmontero@gmail.com'
 EMAIL_HOST_PASSWORD = 'noqo tdet wgwc cdvg'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+

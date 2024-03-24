@@ -2,83 +2,91 @@
 
 <!DOCTYPE html>
 <html lang="en">
- <head>
+<head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Django CRUD</title>
     <link rel="stylesheet" href="{% static 'main.css' %}" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous" />
- </head>
+</head>
 <body>
- <section class="vh-100" style="background-color: #eee;">
-    <div class="container py-5 h-100">
-      <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col col-lg-9 col-xl-7">
-          <div class="card rounded-3">
-            <div class="card-body p-4">
-              <h4 class="text-center my-3 pb-3">Enviar correo</h4>
-
-
-              <div>
-                <form method="POST" class="row row-cols-lg-auto g-3 justify-content-center align-items-center mb-4 pb-2">
-                    {% csrf_token %}
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <div>
-                            {{ form.as_p }}
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+           <a class="navbar-brand" href="#" style="font-weight: bold; font-size: 24px; color: black;">Tareas</a>
+           <div class="d-flex">
+             <a href="{% url 'logout' %}" class="btn btn-light mx-2" style="color: white; background-color: #800000; border: none;" onmouseover="this.style.backgroundColor='#FF0000';" onmouseout="this.style.backgroundColor='#800000';">Cerrar sesión</a>
+             <a href="{% url 'home-page' %}" class="btn btn-light mx-2" style="color: white; background-color: #008000; border: none;" onmouseover="this.style.backgroundColor='#00FF00';" onmouseout="this.style.backgroundColor='#008000';">Tareas</a>
+           </div>
+        </div>
+    </nav>
+<section class="vh-100" style="background-color: #eee;">
+    <div class="container-fluid py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col col-lg-9 col-xl-7">
+                <h4 class="text-center my-3 pb-3">Enviar correo</h4>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div style="border: 2px solid black; padding: 20px; margin: auto; width: 100%;">
+                            <form method="POST" style="display: flex; flex-direction: column; align-items: center;">
+                                {% csrf_token %}
+                                <div style="display: flex; flex-direction: column; width: 100%; margin-bottom: 10px;">
+                                    {{ form.as_p }}
+                                </div>
+                                <div style="margin-top: 20px;">
+                                    <button type="submit" class="btn btn-success ms-1">Enviar</button>
+                                </div>
                         </div>
-                        <button type="submit" class="btn btn-primary" style="margin-left: 10px;">Enviar</button>
                     </div>
-                    <div style="overflow-x: auto; max-width: 100%;">
-                        <table style="width:100%; border-collapse: collapse;">
-                            <thead>
-                                <tr>
-                                    <th style="border: 1px solid #ddd; padding: 8px; text-align: left; background-color: #f2f2f2; min-width: 100px;">Seleccionar</th>
-                                    <th style="border: 1px solid #ddd; padding: 8px; text-align: left; background-color: #f2f2f2; min-width: 150px;">Título</th>
-                                    <th style="border: 1px solid #ddd; padding: 8px; text-align: left; background-color: #f2f2f2; min-width: 100px;">Estado</th>
-                                    <th style="border: 1px solid #ddd; padding: 8px; text-align: left; background-color: #f2f2f2;">Descripción</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for todo_item in todos %}
-                                <tr>
-                                    <td>
-                                        <input type="checkbox" name="todo_ids" value="{{ todo_item.id }}">
-                                        <input type="hidden" name="todo_name_{{ todo_item.id }}" value="{{ todo_item.todo_name }}">
-                                        <input type="hidden" name="description_{{ todo_item.id }}" value="{{ todo_item.description }}">
-                                        <input type="hidden" name="status_{{ todo_item.id }}" value="{{ todo_item.status }}">
-                                    </td>
-                                    <td style="border: 1px solid #ddd; padding: 8px; min-width: 150px;">{{ todo_item.todo_name }}</td>
-                                    <td style="border: 1px solid #ddd; padding: 8px; min-width: 100px;">
-                                        {% if todo_item.status %}
-                                            Completado
-                                        {% else %}
-                                            En progreso
-                                        {% endif %}
-                                    </td>
-                                    <td style="border: 1px solid #ddd; padding: 8px; overflow: auto; max-width: 300px;">
-                                        <details>
-                                            <summary>Ver descripción</summary>
-                                            {{ todo_item.description }}
-                                        </details>
-                                    </td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
+                    <div class="col-md-6">
+                        <table class="table w-100" style="border-collapse: collapse;">
+                        </thead>
+                        <tbody>
+                            {% for todo_item in todos %}
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="todo_ids" value="{{ todo_item.id }}">
+                                    <input type="hidden" name="todo_name_{{ todo_item.id }}" value="{{ todo_item.todo_name }}">
+                                    <input type="hidden" name="description_{{ todo_item.id }}" value="{{ todo_item.description }}">
+                                    <input type="hidden" name="status_{{ todo_item.id }}" value="{{ todo_item.status }}">
+                                </td>
+                                <td style="border: 1px solid #ddd; padding: 8px; min-width: 150px;">{{ todo_item.todo_name }}</td>
+                                <td style="border: 1px solid #ddd; padding: 8px; min-width: 100px;">
+                                    {% if todo_item.status %}
+                                        Completado
+                                    {% else %}
+                                        En progreso
+                                    {% endif %}
+                                </td>
+                                <td style="border: 1px solid #ddd; padding: 8px; overflow: auto; max-width: 300px;">
+                                    <details>
+                                        <summary>Ver descripción</summary>
+                                        {{ todo_item.description }}
+                                    </details>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
                         </table>
                     </div>
-                   
                 </form>
-                <a href="{% url 'home-page' %}" class="btn btn-primary" style="margin-left: 10px;">Ir a la página de tareas</a>
-
+                </div>
             </div>
-            
-            
-            </div>
-          </div>
+        </div>
+    </div>
+</section>
+<footer class="bg-dark text-white text-center py-3">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-5">
+          <p>AMM © 2024</p>
+        </div>
+        <div class="col-md-6 text-end">
+          <p>Contacto: <a href="mailto:andermoralesmontero@gmail.com" class="text-white">andermoralesmontero@gmail.com</a></p>
+          <p>Teléfono: +53 50605309</p>
         </div>
       </div>
     </div>
- </section>
+  </footer>
 </body>
 </html>

@@ -20,7 +20,7 @@ def home(request):
                 new_todo = form.save(commit=False)
                 new_todo.user = request.user
                 new_todo.save()
-                messages.success(request, 'Tarea agregada exitosamente.')
+                messages.success(request, '')
                 return redirect('home-page')
             except IntegrityError:
                 messages.error(request, 'Ya existe una tarea con ese nombre.')

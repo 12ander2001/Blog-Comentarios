@@ -14,7 +14,8 @@ class TodoForm(forms.ModelForm):
         
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['description'].widget.attrs.update({'style': 'width: 300px; height: 80px;'})
+        self.fields['todo_name'].widget.attrs.update({"placeholder": "Agregue un Título"})
+        self.fields['description'].widget.attrs.update({"placeholder": "Agregue una descripción",'style': 'height: 80px;'})
 
     def clean_todo_name(self):
         todo_name = self.cleaned_data.get('todo_name')
@@ -40,8 +41,8 @@ class EmailForm(forms.Form):
     )
     comment = forms.CharField(
         label="Comentario",
-        widget=forms.Textarea(attrs={
-            'rows': 3, 'cols': 50}), 
+        widget=forms.Textarea(attrs={ "placeholder": "Agregue un comentario",
+            'rows': 3, 'cols': 38}), 
         required=False)
 
 
